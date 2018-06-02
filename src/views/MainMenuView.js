@@ -1,9 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, StatusBar } from 'react-native';
-import { Header, Button, Icon } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
+import { createStackNavigator} from 'react-navigation';
+import AddPlayerView from './AddPlayerView.js'
 
 
-export default class MainMenuView extends React.Component {
+class MainMenuView extends React.Component {
+  static navigationOptions = {
+    title: "DISC GOLF SCORECARD",
+    
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -12,10 +18,6 @@ export default class MainMenuView extends React.Component {
         source={require("../assets/images/mainmenubackground.png")}
         style={styles.bgImage}
         />
-        <Header 
-          centerComponent={{text: 'DISC GOLF SCORECARD', style: styles.headerText }}
-          outerContainerStyles={styles.header}
-        />
         <View style={styles.menuButtonContainer}>
           <Button 
             title="NEW ROUND"
@@ -23,14 +25,21 @@ export default class MainMenuView extends React.Component {
             large
             iconRight={{name:"border-color"}}/>
           <Button 
+            title="ADD PLAYER"
+            buttonStyle={styles.menuButton}
+            iconRight={{name:"user-plus", type:"feather"}}
+            onPress={()=> this.props.navigation.navigate('AddPlayer')}/>
+          <Button 
+            title="ADD COURSE"
+            buttonStyle={styles.menuButton}
+            iconRight={{name:"add-to-list", type:"entypo"}}/>
+          <Button 
             title="STATISTICS"
             buttonStyle={styles.menuButton}
-            large
             iconRight={{name:"graph-bar", type:"foundation"}}/>
           <Button 
             title="SETTINGS"
             buttonStyle={styles.menuButton}
-            large
             iconRight={{name:"settings"}}/>        
         </View>
       </View>
@@ -38,6 +47,26 @@ export default class MainMenuView extends React.Component {
   }
 }
 
+export default createStackNavigator(
+  {
+  MainMenu: MainMenuView,
+  AddPlayer: AddPlayerView,
+  },
+  {
+    initialRouteName: 'MainMenu',
+    navigationOptions: {
+      headerStyle : {
+        backgroundColor: '#5998ff'
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle:{
+        color:'#fff',
+        fontSize:24,
+        fontWeight:'normal'
+      }
+    }
+  }
+)
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -54,7 +83,6 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   },
   header : {
-    borderBottomWidth : 0,
     backgroundColor:"#5998ff"
   },
   headerText:{
