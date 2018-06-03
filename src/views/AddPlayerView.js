@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Button, Icon, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import ImagePicker from 'react-native-image-crop-picker'
 
 
 export default class AddPlayerView extends React.Component {

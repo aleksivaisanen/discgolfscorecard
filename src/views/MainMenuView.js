@@ -20,7 +20,7 @@ class MainMenuView extends React.Component {
         />
         <View style={styles.menuButtonContainer}>
           <Button 
-            title="NEW ROUND"
+            title="NEW "
             buttonStyle={styles.menuButton}
             large
             iconRight={{name:"border-color"}}/>
