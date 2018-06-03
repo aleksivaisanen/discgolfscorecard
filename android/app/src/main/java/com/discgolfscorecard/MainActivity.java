@@ -1,4 +1,4 @@
-package com.reactnativetest;
+package com.discgolfscorecard;
 
 import com.facebook.react.ReactActivity;
 

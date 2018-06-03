@@ -45,12 +45,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.reactnativetest",
+    package = "com.discgolfscorecard",
 )
 
 android_resource(
     name = "res",
-    package = "com.reactnativetest",
+    package = "com.discgolfscorecard",
     res = "src/main/res",
 )
 

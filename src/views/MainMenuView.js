@@ -20,7 +20,7 @@ class MainMenuView extends React.Component {
         />
         <View style={styles.menuButtonContainer}>
           <Button 
-            title="NEW "
+            title="NEW ROUND"
             buttonStyle={styles.menuButton}
             large
             iconRight={{name:"border-color"}}/>
@@ -56,7 +56,7 @@ export default createStackNavigator(
     initialRouteName: 'MainMenu',
     navigationOptions: {
       headerStyle : {
-        backgroundColor: '#5998ff'
+        backgroundColor: '#5998ff',
       },
       headerTintColor: "#fff",
       headerTitleStyle:{
