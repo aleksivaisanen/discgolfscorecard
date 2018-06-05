@@ -14,10 +14,7 @@ class MainMenuView extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar hidden />
-        <Image
-        source={require("../assets/images/mainmenubackground.png")}
-        style={styles.bgImage}
-        />
+        
         <View style={styles.menuButtonContainer}>
           <Button 
             title="NEW ROUND"

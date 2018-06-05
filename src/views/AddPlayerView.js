@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, Image } from 'react-native';
-import { Button, Icon, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Button, Icon, FormLabel, FormInput, Avatar } from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Header } from 'react-navigation';
 
@@ -37,15 +37,16 @@ export default class AddPlayerView extends React.Component {
         <View style={styles.container}>
             <StatusBar hidden />
             <View style={styles.avatarContainer}>
-              {this.state.image != null ? this.renderImage(this.state.image) : null}
+            <Avatar
+              xlarge
+              rounded
+              source={this.state.image != null ? this.state.image : null }
+              icon = {{name : 'plus', type : 'entypo'}}
+              onPress={() => this.pickSingleImage()}
+              activeOpacity={0.7}
+            />
             </View>
             <View style={styles.addPlayerForm}>
-            <Button 
-                title="Add avatar"
-                buttonStyle={styles.menuButton}
-                iconRight={{name:"user-plus", type:"feather"}}
-                onPress = {() => this.pickSingleImage()}
-                />
             
             <FormLabel>Name</FormLabel>
             <FormInput/>
