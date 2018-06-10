@@ -1,5 +1,5 @@
 import { AppRegistry, YellowBox } from 'react-native';
-import MainMenu from './src/views/MainMenuView';
+import App from './src/App';
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
-AppRegistry.registerComponent('discgolfscorecard', () => MainMenu);
+AppRegistry.registerComponent('discgolfscorecard', () => App);

@@ -3,14 +3,16 @@ import { StyleSheet, Text, View, Image, StatusBar } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { createStackNavigator} from 'react-navigation';
 import AddPlayerView from './AddPlayerView.js'
-
-
+import AddCourseView from './AddCourseView.js'
+ 
 class MainMenuView extends React.Component {
+  
   static navigationOptions = {
     title: "DISC GOLF SCORECARD",
     
   }
   render() {
+ 
     return (
       <View style={styles.container}>
         <StatusBar hidden />
@@ -29,7 +31,8 @@ class MainMenuView extends React.Component {
           <Button 
             title="ADD COURSE"
             buttonStyle={styles.menuButton}
-            iconRight={{name:"add-to-list", type:"entypo"}}/>
+            iconRight={{name:"add-to-list", type:"entypo"}}
+            onPress={() => this.props.navigation.navigate('AddCourse')}/>
           <Button 
             title="STATISTICS"
             buttonStyle={styles.menuButton}
@@ -48,6 +51,7 @@ export default createStackNavigator(
   {
   MainMenu: MainMenuView,
   AddPlayer: AddPlayerView,
+  AddCourse: AddCourseView,
   },
   {
     initialRouteName: 'MainMenu',

@@ -50,11 +50,13 @@ export default class AddPlayerView extends React.Component {
             
             <FormLabel>Name</FormLabel>
             <FormInput/>
+            
+            <FormLabel>Nickname</FormLabel>
+            <FormInput/>
             <Button 
                 title="ADD PLAYER"
                 buttonStyle={styles.menuButton}
                 iconRight={{name:"user-plus", type:"feather"}}/>
-            
             </View>
         </View>
         );
@@ -75,20 +77,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  bgImage : {
-    flex: 1,
-    position: "absolute",
-    width:"100%",
-    height:"100%",
-    resizeMode: "cover"
-  },
-  header : {
-    backgroundColor:"#5998ff"
-  },
-  headerText:{
-    color:'#fff',
-    fontSize:24
   },
   menuButton : {
     marginVertical : 10,
