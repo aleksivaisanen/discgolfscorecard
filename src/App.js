@@ -1,16 +1,17 @@
 import React from 'react';
-import AddCourseView from './views/AddCourseView.js'
 import MainMenuView from './views/MainMenuView.js'
 import { createStore } from 'redux';
-import { Provider } from 'react-redux' 
+import { Provider } from 'react-redux'
+import rootReducer from './reducers/rootReducer'
 
-export default class App extends React.Component{   
+export let store = createStore(rootReducer);
+
+export default class App extends React.Component {
     render() {
-        //let store = createStore();
-        return(
-            //<Provider store = {store}>
-                <MainMenuView/>
-            //</Provider>
+        return (
+            <Provider store={store}>
+                <MainMenuView />
+            </Provider>
         );
     }
 }
