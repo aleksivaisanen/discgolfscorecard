@@ -3,20 +3,10 @@ import { StyleSheet, View, Text } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
 import { connect } from 'react-redux';
 import { updateParForHole } from '../actions/initActions';
-import { store } from '../App'
 
 class AddHoleItem extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            value: 3,
-        };
-    }
 
     render() {
-        console.log(this.props)
-        console.log(this.props.par[this.props.holeNumber - 1])
-        console.log(store.getState())
         return (
 
             <View style={styles.container}>
@@ -27,9 +17,9 @@ class AddHoleItem extends React.Component {
                     <Text style={styles.text}>Par</Text>
                     <Text style={styles.text}> </Text>
                     <NumericInput
-                        value={this.props.par[this.props.holeNumber - 1]}
+                        value={this.props.parArray[this.props.holeNumber - 1]}
                         onChange={
-                            val => this.props.updatePar(this.props.holeNo, val)
+                            val => this.props.updatePar(this.props.holeNumber, val)
                         }
                         minValue={1}
                         maxValue={10}
@@ -71,7 +61,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return ({
-        par: state.init.parArray
+        parArray: state.init.parArray
     })
 }
 
