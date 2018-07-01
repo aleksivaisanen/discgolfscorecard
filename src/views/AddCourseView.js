@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar, Text, FlatList } from 'react-native';
+import { StyleSheet, View, StatusBar, FlatList } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import NumericInput from 'react-native-numeric-input';
 import AddHoleItem from '../components/AddHoleItem.js';
 import { connect } from 'react-redux';
-import { updateNoOfHoles, setCourseName } from '../actions/initActions'
+import { updateNoOfHoles, setCourseName, createCourse } from '../actions/initActions'
 
 
 class AddCourseView extends React.Component {
@@ -12,7 +12,6 @@ class AddCourseView extends React.Component {
   static navigationOptions = {
     title: "ADD COURSE",
   }
-
 
   render() {
 
@@ -47,6 +46,8 @@ class AddCourseView extends React.Component {
           title="ADD COURSE"
           buttonStyle={styles.menuButton}
           iconRight={{ name: "user-plus", type: "feather" }}
+          //add validation of inputdata
+          onPress={this.props.createCourse}
         />
       </View>
     );
@@ -83,7 +84,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     updateHoles: (noOfHoles) => dispatch(updateNoOfHoles(noOfHoles)),
-    setCourseName: (name) => dispatch(setCourseName(name))
+    setCourseName: (name) => dispatch(setCourseName(name)),
+    createCourse: () => dispatch(createCourse())
   })
 
 }

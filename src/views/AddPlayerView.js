@@ -4,7 +4,7 @@ import { Button, FormLabel, FormInput, Avatar } from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Header } from 'react-navigation';
 import { connect } from 'react-redux';
-import { setPlayerName, setPlayerNickname, setPlayerProfilepic } from '../actions/initActions';
+import { setPlayerName, setPlayerNickname, setPlayerProfilepic, createPlayer } from '../actions/initActions';
 
 
 class AddPlayerView extends React.Component {
@@ -48,7 +48,9 @@ class AddPlayerView extends React.Component {
           <Button
             title="ADD PLAYER"
             buttonStyle={styles.menuButton}
-            iconRight={{ name: "user-plus", type: "feather" }} />
+            iconRight={{ name: "user-plus", type: "feather" }}
+            //add validation on inputdata
+            onPress={this.props.createPlayer} />
         </View>
       </View>
     );
@@ -88,7 +90,8 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     setPlayerName: (name) => dispatch(setPlayerName(name)),
     setPlayerNickname: (name) => dispatch(setPlayerNickname(name)),
-    setProfilepic: (image) => dispatch(setPlayerProfilepic(image))
+    setProfilepic: (image) => dispatch(setPlayerProfilepic(image)),
+    createPlayer: (playerName, playerNickname, profilepic) => dispatch(createPlayer(playerName, playerNickname, profilepic)),
   })
 
 }

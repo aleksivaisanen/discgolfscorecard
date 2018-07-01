@@ -1,4 +1,15 @@
-import { UPDATE_PAR_FOR_HOLE, UPDATE_NO_OF_HOLES, SET_COURSE_NAME, SET_PLAYER_NAME, SET_PLAYER_NICKNAME, SET_PLAYER_PROFILEPIC } from '../actions/initActions'
+import {
+    UPDATE_PAR_FOR_HOLE,
+    UPDATE_NO_OF_HOLES,
+    SET_COURSE_NAME,
+    SET_PLAYER_NAME,
+    SET_PLAYER_NICKNAME,
+    SET_PLAYER_PROFILEPIC,
+    CREATE_COURSE,
+    CREATE_PLAYER
+} from '../actions/initActions';
+import Course from '../classes/Course';
+import Player from '../classes/Player'
 
 const defaultState = {
     noOfHoles: 1,
@@ -6,7 +17,9 @@ const defaultState = {
     courseName: "",
     playerName: "",
     playerNickname: "",
-    profilepic: null
+    profilepic: null,
+    courses: [],
+    players: []
 }
 
 export const initReducers = (state = defaultState, action) => {
@@ -61,6 +74,24 @@ export const initReducers = (state = defaultState, action) => {
                     height: action.profilepic.height,
                     mime: action.profilepic.mime
                 })
+            }
+        case CREATE_COURSE:
+            return {
+                ...state,
+                noOfHoles: 1,
+                parArray: [3],
+                courseName: "",
+                courses: [...state.courses,
+                new Course(state.courseName, state.parArray, state.courses.length)]
+            }
+        case CREATE_PLAYER:
+            return {
+                ...state,
+                playerName: "",
+                playerNickname: "",
+                profilepic: null,
+                players: [...state.players,
+                new Player(state.playerName, state.playerNickname, state.profilepic, state.players.length)]
             }
         default:
             return state;

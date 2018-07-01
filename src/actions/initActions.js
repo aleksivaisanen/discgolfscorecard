@@ -4,6 +4,8 @@ export const SET_COURSE_NAME = 'SET_COURSE_NAME';
 export const SET_PLAYER_NAME = 'SET_PLAYER_NAME';
 export const SET_PLAYER_NICKNAME = 'SET_PLAYER_NICKNAME';
 export const SET_PLAYER_PROFILEPIC = 'SET_PLAYER_PROFILEPIC';
+export const CREATE_COURSE = 'CREATE_COURSE';
+export const CREATE_PLAYER = 'CREATE_PLAYER';
 
 export const updateNoOfHoles = (noOfHoles) => {
     return {
@@ -45,5 +47,17 @@ export const setPlayerProfilepic = (image) => {
     return {
         type: SET_PLAYER_PROFILEPIC,
         profilepic: image
+    }
+}
+
+export const createCourse = () => {
+    return {
+        type: CREATE_COURSE,
+    }
+}
+
+export const createPlayer = () => {
+    return {
+        type: CREATE_PLAYER,
     }
 }
