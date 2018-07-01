@@ -1,102 +1,67 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
+import { StyleSheet, View, FlatList, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux'
+import { setHeader } from '../actions/newRoundActions';
+
+const deviceWidth = Dimensions.get('window').width;
 
 class NewRoundView extends React.Component {
 
-  static navigationOptions = {
-    title: "NEW ROUND"
-  }
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return params;
+    };
 
-  render() {
-
-    let pickedCourse;
-    if (this.props.chosenCourse) {
-      pickedCourse = <Text>{this.props.chosenCourse.courseName}</Text>
-    } else {
-      pickedCourse = <Text>No course picked</Text>
+    componentDidMount() {
+        this.props.navigation.setParams({ title: "Hole 1, " + "Par " + this.props.chosenCourse.parArray[0] });
     }
-
-    let pickedPlayers;
-    if (this.props.chosenPlayers.length === 0) {
-      pickedPlayers = <Text>No players picked</Text>
-    } else {
-      pickedPlayers =
-        this.props.chosenPlayers.map(item =>
-          <Text key={item.id}>{item.playerName}</Text>
+    render() {
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    horizontal
+                    data={this.props.chosenCourse.parArray}
+                    snapToInterval={deviceWidth}
+                    pagingEnabled
+                    renderItem={({ item, index }) =>
+                        <View style={styles.holeContainer}>
+                            <Text>Hole</Text>
+                            <Text>{index + 1}</Text>
+                            <Text>Par</Text>
+                            <Text>{item}</Text>
+                        </View>
+                    }
+                    keyExtractor={(number, index) => String(index)}
+                />
+            </View>
         )
     }
-
-
-
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.containerTop}>
-          <Text>Players:</Text>
-          {pickedPlayers}
-          <Text />
-          <Text>Course:</Text>
-          {pickedCourse}
-        </View>
-        <View style={styles.containerBottom}>
-          <Button
-            title="Choose players"
-            buttonStyle={styles.menuButton}
-            onPress={() => this.props.navigation.navigate('ChoosePlayers')}
-          />
-          <Button
-            title="Choose course"
-            buttonStyle={styles.menuButton}
-            onPress={() => this.props.navigation.navigate('ChooseCourse')}
-          />
-          <Button
-            title="Place bets and assign handicaps"
-            buttonStyle={styles.menuButton}
-          />
-
-          <Button
-            title="Start new round"
-            buttonStyle={styles.menuButton}
-          />
-        </View>
-      </View>
-    )
-  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between'
-  },
-  containerTop: {
-    flex: 1,
-    justifyContent: 'flex-start'
-  },
-  containerBottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  menuButton: {
-    marginVertical: 10,
-    backgroundColor: "#5998ff"
-  }
-
+    container: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    holeContainer: {
+        flex: 1,
+        width: deviceWidth
+    }
 
 });
 
 const mapStateToProps = (state) => {
-  return ({
-    chosenPlayers: state.newRound.chosenPlayers,
-    chosenCourse: state.newRound.chosenCourse
-  })
+    return ({
+        chosenPlayers: state.newRound.chosenPlayers,
+        chosenCourse: state.newRound.chosenCourse,
+        header: state.newRound.header,
+    })
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return ({
-  })
+    return ({
+        setHeader: (header) => dispatch(setHeader(header)),
+    })
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewRoundView);

@@ -5,10 +5,11 @@ import { createStackNavigator } from 'react-navigation';
 import AddPlayerView from './AddPlayerView.js'
 import AddCourseView from './AddCourseView.js'
 import SettingsView from './SettingsView.js'
-import NewRoundView from './NewRoundView.js'
+import NewRoundConfigView from './NewRoundConfigView'
 import StatisticsView from './StatisticsView.js'
 import ChooseCourseView from './ChooseCourseView'
 import ChoosePlayersView from './ChoosePlayersView'
+import NewRoundView from './NewRoundView.js';
 
 class MainMenuView extends React.Component {
 
@@ -28,7 +29,7 @@ class MainMenuView extends React.Component {
             buttonStyle={styles.menuButton}
             large
             iconRight={{ name: "border-color" }}
-            onPress={() => this.props.navigation.navigate('NewRound')} />
+            onPress={() => this.props.navigation.navigate('NewRoundConfig')} />
           <Button
             title="ADD PLAYER"
             buttonStyle={styles.menuButton}
@@ -58,13 +59,14 @@ class MainMenuView extends React.Component {
 export default createStackNavigator(
   {
     MainMenu: MainMenuView,
-    NewRound: NewRoundView,
+    NewRoundConfig: NewRoundConfigView,
     AddPlayer: AddPlayerView,
     AddCourse: AddCourseView,
     Statistics: StatisticsView,
     Settings: SettingsView,
     ChoosePlayers: ChoosePlayersView,
-    ChooseCourse: ChooseCourseView
+    ChooseCourse: ChooseCourseView,
+    NewRound: NewRoundView,
   },
   {
     initialRouteName: 'MainMenu',

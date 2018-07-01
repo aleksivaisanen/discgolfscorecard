@@ -45,7 +45,7 @@ class AddCourseView extends React.Component {
         <Button
           title="ADD COURSE"
           buttonStyle={styles.menuButton}
-          iconRight={{ name: "user-plus", type: "feather" }}
+          iconRight={{ name: "add-to-list", type: "entypo" }}
           //add validation of inputdata
           onPress={this.props.createCourse}
         />
