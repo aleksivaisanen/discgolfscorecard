@@ -13,7 +13,15 @@ class NewRoundView extends React.Component {
     };
 
     componentDidMount() {
-        this.props.navigation.setParams({ title: "Hole 1, " + "Par " + this.props.chosenCourse.parArray[0] });
+        this.props.navigation.setParams({ title: "Hole 1 - " + "Par " + this.props.chosenCourse.parArray[0] });
+    }
+    onScrollEnd = (e) => {
+        //calculates current index based on view offset
+        let contentOffset = e.nativeEvent.contentOffset;
+        let viewSize = e.nativeEvent.layoutMeasurement;
+        let pageNum = Math.floor(contentOffset.x / viewSize.width);
+        let holeNo = pageNum + 1
+        this.props.navigation.setParams({ title: "Hole " + holeNo + " - " + "Par " + this.props.chosenCourse.parArray[pageNum] });
     }
     render() {
         return (
@@ -23,6 +31,7 @@ class NewRoundView extends React.Component {
                     data={this.props.chosenCourse.parArray}
                     snapToInterval={deviceWidth}
                     pagingEnabled
+                    onMomentumScrollEnd={this.onScrollEnd}
                     renderItem={({ item, index }) =>
                         <View style={styles.holeContainer}>
                             <Text>Hole</Text>

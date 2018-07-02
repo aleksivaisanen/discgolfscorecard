@@ -18,8 +18,8 @@ const defaultState = {
     playerName: "",
     playerNickname: "",
     profilepic: null,
-    courses: [],
-    players: []
+    courses: [new Course("Lauste", [3, 3, 3, 3, 3, 3, 4, 5, 4, 6, 7], 0), new Course("Parainen", [2, 3, 4, 5, 6, 7, 8], 1)],
+    players: [new Player("Aleksi", "Aksu", {}, 0), new Player("VÄisäne", "Väiski", {}, 1), new Player("Titta", "Titsu", {}, 2)]
 }
 
 export const initReducers = (state = defaultState, action) => {
