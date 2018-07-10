@@ -1,7 +1,6 @@
 import {
     CHOOSE_SINGLE_PLAYER,
     CHOOSE_COURSE,
-    SET_HEADER
 } from '../actions/newRoundActions'
 
 import Player from '../classes/Player';
@@ -10,7 +9,6 @@ import Course from '../classes/Course';
 const defaultState = {
     chosenPlayers: [],
     chosenCourse: null,
-    header: ""
 
 }
 
@@ -38,14 +36,8 @@ export const newRoundReducers = (state = defaultState, action) => {
             } else {
                 return {
                     ...state,
-                    chosenCourse: action.course,
-                    header: "Hole 1, " + "Par " + action.course.parArray[0]
+                    chosenCourse: action.course
                 }
-            }
-        case SET_HEADER:
-            return {
-                ...state,
-                header: action.header
             }
 
         default:
