@@ -2,12 +2,17 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux'
-import { setHeader } from '../actions/newRoundActions';
+import { startNewRound } from '../actions/newRoundActions'
 
 class NewRoundConfigView extends React.Component {
 
   static navigationOptions = {
     title: "NEW ROUND"
+  }
+
+  startRound = () => {
+    this.props.startNewRound()
+    this.props.navigation.navigate("NewRound");
   }
 
   render() {
@@ -59,9 +64,7 @@ class NewRoundConfigView extends React.Component {
           <Button
             title="Start new round"
             buttonStyle={styles.menuButton}
-            onPress={() => {
-              this.props.navigation.navigate('NewRound');
-            }}
+            onPress={this.startRound}
           />
         </View>
       </View>
@@ -99,6 +102,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
+    startNewRound: () => dispatch(startNewRound())
   })
 
 }

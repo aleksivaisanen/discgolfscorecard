@@ -4,5 +4,5 @@ import { newRoundReducers } from './newRoundReducers';
 
 export default combineReducers({
     init: initReducers,
-    newRound: newRoundReducers,
+    newRound: newRoundReducers
 })

@@ -1,14 +1,13 @@
 //RoundScore data model
 export default class RoundScore {
 
-    constructor(course, player, id) {
+    constructor(course, player, id, parArray) {
         this.course = course, //Course object
             this.player = player, //Player object
             this.id = id,
-            this.scoreArray = []
+            this.scoreArray = parArray, //takes the parArray of the score
+            this.finished = false //turns to true when round is done
+
     }
 
-    setScoreForHole(holeNo, score) {
-        this.scoreArray[holeNo - 1] = score;
-    }
 }

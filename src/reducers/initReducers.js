@@ -24,6 +24,8 @@ const defaultState = {
 
 export const initReducers = (state = defaultState, action) => {
     console.log(state);
+    const defaultPar = 3;
+
     switch (action.type) {
         case UPDATE_NO_OF_HOLES:
             if (state.noOfHoles > action.noOfHoles) {
@@ -37,7 +39,7 @@ export const initReducers = (state = defaultState, action) => {
                 return {
                     ...state,
                     noOfHoles: action.noOfHoles,
-                    parArray: [...state.parArray, 3]
+                    parArray: [...state.parArray, defaultPar]
                 }
             }
             else return state;
@@ -79,7 +81,7 @@ export const initReducers = (state = defaultState, action) => {
             return {
                 ...state,
                 noOfHoles: 1,
-                parArray: [3],
+                parArray: [defaultPar],
                 courseName: "",
                 courses: [...state.courses,
                 new Course(state.courseName, state.parArray, state.courses.length)]
