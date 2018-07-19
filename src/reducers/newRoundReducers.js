@@ -59,11 +59,10 @@ export const newRoundReducers = (state = defaultState, action) => {
             let round = state.roundScores.filter(round =>
                 (round.id === state.currentRound && round.player.id === action.playerId))[0]
             let otherRounds = state.roundScores.filter(rnd => round !== rnd);
-
             let newRound = Object.assign(new RoundScore, round, {
-                scoreArray: [...round.scoreArray.slice(0, action.holeNo - 1),
+                scoreArray: [...(round.scoreArray).slice(0, action.holeNo - 1),
                 action.score,
-                ...round.scoreArray.slice(action.holeNo)
+                ...(round.scoreArray).slice(action.holeNo)
                 ]
             })
             return {

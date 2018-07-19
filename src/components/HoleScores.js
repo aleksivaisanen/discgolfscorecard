@@ -33,7 +33,9 @@ class HoleScores extends Component {
                         <NumericInput
                             rounded
                             value={this.getCurrentPlayerCurrentScore(item.id)}
-                            onChange={val => this.updateScore(item.id, index, val)}
+                            onChange={
+                                val => this.props.setSingleScoreForPlayer(item.id, this.props.holeNo, val)
+                            }
                             minValue={1}
                             maxValue={20}
                             editable={false}
