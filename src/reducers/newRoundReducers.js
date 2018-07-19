@@ -3,7 +3,7 @@ import {
     CHOOSE_COURSE,
     START_NEW_ROUND,
     SET_SINGLE_SCORE_FOR_PLAYER,
-    SET_CURRENT_HOLE
+    SET_CURRENT_HOLE,
 } from '../actions/newRoundActions'
 
 import Player from '../classes/Player';
@@ -15,7 +15,8 @@ const defaultState = {
     chosenCourse: new Course("Lauste", [3, 3, 3, 3, 3, 3, 4, 5, 4, 6, 7], 0),
     currentRound: null, //current round id
     roundScores: [], // all the scores for all the rounds
-    currentHole: 1
+    currentHole: 1,
+    standings: []
 }
 
 export const newRoundReducers = (state = defaultState, action) => {
@@ -47,11 +48,12 @@ export const newRoundReducers = (state = defaultState, action) => {
             }
         case START_NEW_ROUND:
             let currentRoundId = Date.now(); //takes the id from current date in integer form
+            let newRoundScores = state.chosenPlayers.map((player) => { return new RoundScore(state.chosenCourse, player, currentRoundId, state.chosenCourse.parArray) })
             return {
                 ...state,
                 currentRound: currentRoundId,
-                roundScores: [...state.roundScores,
-                ...state.chosenPlayers.map((player) => { return new RoundScore(state.chosenCourse, player, currentRoundId, state.chosenCourse.parArray) })]
+                roundScores: [...state.roundScores, ...newRoundScores],
+                standings: [...newRoundScores]
             }
 
         case SET_SINGLE_SCORE_FOR_PLAYER:
@@ -65,16 +67,34 @@ export const newRoundReducers = (state = defaultState, action) => {
                 ...(round.scoreArray).slice(action.holeNo)
                 ]
             })
+            let newScores = [...otherRounds, newRound]
+
+            //find all the rounds with current id
+            let currentRounds = newScores.filter(round => round.id == state.currentRound)
+
+            //comparefunction for sorting standings
+            const compareFunc = (a, b) => {
+                let aTotal = a.scoreArray.reduce((a, b) => a + b, 0)
+                let bTotal = b.scoreArray.reduce((a, b) => a + b, 0)
+                if (aTotal < bTotal) {
+                    return -1
+                } else if (aTotal > bTotal) {
+                    return 1
+                } return 0
+            }
+
+            let sortedStandings = currentRounds.sort(compareFunc)
+
             return {
                 ...state,
-                roundScores: [...otherRounds, newRound]
+                standings: sortedStandings,
+                roundScores: newScores
             }
         case SET_CURRENT_HOLE:
             return {
                 ...state,
                 currentHole: action.currentHole
             }
-
         default:
             return state;
     }

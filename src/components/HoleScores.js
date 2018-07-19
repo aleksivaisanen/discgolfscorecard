@@ -6,15 +6,27 @@ import NumericInput from 'react-native-numeric-input'
 import { setSingleScoreForPlayer } from '../actions/newRoundActions'
 
 class HoleScores extends Component {
+    //get current round for player
+    getCurrentPlayerCurrentRound = (playerId) => {
+        let currentRounds = this.props.roundScores.filter(round => this.props.currentRound === round.id);
+        let currentPlayersRound = currentRounds.filter(round => playerId === round.player.id)[0];
+        return currentPlayersRound
+    }
+
     //gets current score from redux state
     getCurrentPlayerCurrentScore = (playerId) => {
         let index = this.props.holeNo - 1;
-        let currentRounds = this.props.roundScores.filter(round => this.props.currentRound === round.id);
-        let currentPlayersRound = currentRounds.filter(round => playerId === round.player.id)[0];
+        let currentPlayersRound = this.getCurrentPlayerCurrentRound(playerId);
         let currentScoreForPlayer = currentPlayersRound.scoreArray[index];
         return currentScoreForPlayer;
     }
 
+    //calculates players scores difference with total par
+    differenceForPar = (playerId) => {
+        let playerScore = this.getCurrentPlayerCurrentRound(playerId).scoreArray.reduce((a, b) => a + b, 0)
+        let courseTotalPar = this.props.chosenCourse.parArray.reduce((a, b) => a + b, 0)
+        return (playerScore - courseTotalPar)
+    }
     render() {
 
         return (
@@ -24,12 +36,14 @@ class HoleScores extends Component {
                 extraData={this.props.roundScores}
                 renderItem={({ item, index }) =>
                     <View style={styles.container}>
+                        <Text style={styles.text}>{this.props.standings.findIndex(roundScore => roundScore.player.id === item.id) + 1}.</Text>
                         <Avatar
                             medium
                             rounded
                             source={item.profilepic}
                         />
                         <Text style={styles.text}>{item.playerName}</Text>
+                        <Text style={styles.text}>Total: {this.differenceForPar(item.id)}</Text>
                         <NumericInput
                             rounded
                             value={this.getCurrentPlayerCurrentScore(item.id)}
@@ -71,8 +85,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return ({
         chosenPlayers: state.newRound.chosenPlayers,
+        chosenCourse: state.newRound.chosenCourse,
         roundScores: state.newRound.roundScores,
         currentRound: state.newRound.currentRound,
+        standings: state.newRound.standings,
     })
 }
 
