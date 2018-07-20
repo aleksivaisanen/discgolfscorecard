@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, View, StatusBar, FlatList, Alert } from 'react-native';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import NumericInput from 'react-native-numeric-input';
 import AddHoleItem from '../components/AddHoleItem.js';
@@ -11,6 +11,15 @@ class AddCourseView extends React.Component {
 
   static navigationOptions = {
     title: "ADD COURSE",
+  }
+
+  submitValidation = () => {
+    if(this.props.courseName !== ""){
+      this.props.createCourse()
+      Alert.alert("Success!","Course created!")
+    } else {
+      alert("Course name can't be empty!")
+    }
   }
 
   render() {
@@ -46,8 +55,7 @@ class AddCourseView extends React.Component {
           title="ADD COURSE"
           buttonStyle={styles.menuButton}
           iconRight={{ name: "add-to-list", type: "entypo" }}
-          //add validation of inputdata
-          onPress={this.props.createCourse}
+          onPress={this.submitValidation}
         />
       </View>
     );

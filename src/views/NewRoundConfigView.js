@@ -11,8 +11,16 @@ class NewRoundConfigView extends React.Component {
   }
 
   startRound = () => {
-    this.props.startNewRound()
-    this.props.navigation.navigate("NewRound");
+    if(!this.props.chosenCourse && this.props.chosenPlayers.length < 1){
+      alert("Choose the course and the players!")
+    } else if(!this.props.chosenCourse) {
+      alert("Choose the course!")
+    } else if(this.props.chosenPlayers.length < 1) {
+      alert("Choose the players!")
+    } else {
+      this.props.startNewRound()
+      this.props.navigation.navigate("NewRound");
+    }
   }
 
   render() {
@@ -33,9 +41,6 @@ class NewRoundConfigView extends React.Component {
           <Text key={item.id}>{item.playerName}</Text>
         )
     }
-
-
-
 
     return (
       <View style={styles.container}>

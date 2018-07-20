@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import { StyleSheet, View, StatusBar, Alert } from 'react-native';
 import { Button, FormLabel, FormInput, Avatar } from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Header } from 'react-navigation';
@@ -11,6 +11,16 @@ class AddPlayerView extends React.Component {
   static navigationOptions = {
     title: "ADD PLAYER",
   }
+
+  submitValidation = () => {
+    if(this.props.playerName !== ""){
+      this.props.createPlayer()
+      Alert.alert("Success!","Player created!")
+    } else {
+      alert("Player name can't be empty!")
+    }
+  }
+
   pickSingleImage() {
     ImagePicker.openPicker({
       width: 300,
@@ -50,7 +60,7 @@ class AddPlayerView extends React.Component {
             buttonStyle={styles.menuButton}
             iconRight={{ name: "user-plus", type: "feather" }}
             //add validation on inputdata
-            onPress={this.props.createPlayer} />
+            onPress={this.submitValidation} />
         </View>
       </View>
     );
@@ -91,7 +101,7 @@ const mapDispatchToProps = (dispatch) => {
     setPlayerName: (name) => dispatch(setPlayerName(name)),
     setPlayerNickname: (name) => dispatch(setPlayerNickname(name)),
     setProfilepic: (image) => dispatch(setPlayerProfilepic(image)),
-    createPlayer: (playerName, playerNickname, profilepic) => dispatch(createPlayer(playerName, playerNickname, profilepic)),
+    createPlayer: () => dispatch(createPlayer()),
   })
 
 }
