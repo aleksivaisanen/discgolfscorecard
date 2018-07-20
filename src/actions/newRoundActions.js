@@ -3,6 +3,7 @@ export const SET_SINGLE_SCORE_FOR_PLAYER = "SET_SINGLE_SCORE_FOR_PLAYER"
 export const CHOOSE_SINGLE_PLAYER = 'CHOOSE_SINGLE_PLAYER'
 export const CHOOSE_COURSE = 'CHOOSE_COURSE'
 export const SET_CURRENT_HOLE = "SET_CURRENT_HOLE"
+export const FINISH_ROUND = "FINISH_ROUND"
 
 export const startNewRound = () => {
     return {
@@ -18,7 +19,6 @@ export const setSingleScoreForPlayer = (playerId, holeNo, score) => {
         score
     }
 }
-
 
 export const chooseSinglePlayer = (player) => {
     return {
@@ -37,5 +37,11 @@ export const setCurrentHole = (currentHole) => {
     return {
         type: SET_CURRENT_HOLE,
         currentHole
+    }
+}
+
+export const finishRound = () => {
+    return {
+        type: FINISH_ROUND
     }
 }

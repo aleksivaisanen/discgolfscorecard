@@ -29,13 +29,9 @@ class NewRoundView extends React.Component {
         let pageNum = Math.floor(contentOffset.x / viewSize.width);
         let holeNo = pageNum + 1
         this.props.setCurrentHole(holeNo)
-        //calculates current index based on view offset
         this.props.navigation.setParams({ title: "Hole " + holeNo + " - " + "Par " + this.props.chosenCourse.parArray[holeNo - 1] });
     }
-    //set previous button disabled if on first hole
-    finishRound = () => {
 
-    }
 
     finishDisabled = () => {
         let index = this.props.currentHole - 1
@@ -55,15 +51,14 @@ class NewRoundView extends React.Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    ref={(ref) => { this.flatListRef = ref; }}
                     horizontal
                     data={this.props.chosenCourse.parArray}
                     showsHorizontalScrollIndicator={false}
                     snapToInterval={deviceWidth}
                     pagingEnabled
-                    onScroll={Animated.event( // Animated.event returns a function that takes an array where the first element...
-                        [{ nativeEvent: { contentOffset: { x: this.scrollX } } }] // ... is an object that maps any nativeEvent prop to a variable
-                    )} // in this case we are mapping the value of nativeEvent.contentOffset.x to this.scrollX
+                    onScroll={Animated.event( 
+                        [{ nativeEvent: { contentOffset: { x: this.scrollX } } }] 
+                    )}
                     scrollEventThrottle={16}
                     onMomentumScrollEnd={this.onScrollEnd}
                     renderItem={({ item, index }) =>
@@ -77,9 +72,9 @@ class NewRoundView extends React.Component {
                     {/*page indicator dots*/}
                     {this.props.chosenCourse.parArray.map((_, i) => {
                         let opacity = position.interpolate({
-                            inputRange: [i - 1, i, i + 1], // each dot will need to have an opacity of 1 when position is equal to their index (i)
-                            outputRange: [0.3, 1, 0.3], // when position is not i, the opacity of the dot will animate to 0.3
-                            extrapolate: 'clamp' // this will prevent the opacity of the dots from going outside of the outputRange (i.e. opacity will not be less than 0.3)
+                            inputRange: [i - 1, i, i + 1], 
+                            outputRange: [0.3, 1, 0.3],
+                            extrapolate: 'clamp' 
                         });
                         return (
                             <Animated.View
@@ -101,7 +96,7 @@ class NewRoundView extends React.Component {
                         buttonStyle={styles.button}
                         disabled={this.finishDisabled()}
                         title={"Finish round"}
-                        onPress={this.finishRound}
+                        onPress={() => this.props.navigation.navigate('RoundFinished')}
                     />
                 </View>
             </View>
@@ -147,7 +142,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        startNewRound: () => dispatch(startNewRound()),
         setCurrentHole: (currentHole) => dispatch(setCurrentHole(currentHole))
     })
 

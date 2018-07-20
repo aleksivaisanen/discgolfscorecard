@@ -2,14 +2,15 @@ import React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { Button, } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
-import AddPlayerView from './AddPlayerView.js'
-import AddCourseView from './AddCourseView.js'
-import SettingsView from './SettingsView.js'
+import AddPlayerView from './AddPlayerView'
+import AddCourseView from './AddCourseView'
+import SettingsView from './SettingsView'
 import NewRoundConfigView from './NewRoundConfigView'
-import StatisticsView from './StatisticsView.js'
+import StatisticsView from './StatisticsView'
 import ChooseCourseView from './ChooseCourseView'
 import ChoosePlayersView from './ChoosePlayersView'
-import NewRoundView from './NewRoundView.js';
+import NewRoundView from './NewRoundView';
+import RoundFinishedView from './RoundFinishedView';
 
 class MainMenuView extends React.Component {
 
@@ -67,6 +68,7 @@ export default createStackNavigator(
     ChoosePlayers: ChoosePlayersView,
     ChooseCourse: ChooseCourseView,
     NewRound: NewRoundView,
+    RoundFinished: RoundFinishedView,
   },
   {
     initialRouteName: 'MainMenu',

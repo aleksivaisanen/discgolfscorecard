@@ -43,7 +43,7 @@ class HoleScores extends Component {
                             source={item.profilepic}
                         />
                         <Text style={styles.text}>{item.playerName}</Text>
-                        <Text style={styles.text}>Total: {this.differenceForPar(item.id)}</Text>
+                        <Text style={styles.text}>+/- : {this.differenceForPar(item.id)}</Text>
                         <NumericInput
                             rounded
                             value={this.getCurrentPlayerCurrentScore(item.id)}

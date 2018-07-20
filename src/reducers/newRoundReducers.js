@@ -4,6 +4,7 @@ import {
     START_NEW_ROUND,
     SET_SINGLE_SCORE_FOR_PLAYER,
     SET_CURRENT_HOLE,
+    FINISH_ROUND,
 } from '../actions/newRoundActions'
 
 import Player from '../classes/Player';
@@ -94,6 +95,22 @@ export const newRoundReducers = (state = defaultState, action) => {
             return {
                 ...state,
                 currentHole: action.currentHole
+            }
+        
+        case FINISH_ROUND:
+            currentRounds = state.roundScores.filter((item) => item.id === state.currentRound)
+            otherRounds = state.roundScores.filter((item) => item.id !== state.currentRound)    
+            let finishedRounds = currentRounds.map(item => Object.assign(new RoundScore, item, {finished: true}))
+
+            return {
+                ...state,
+                chosenPlayers: [],
+                chosenCourse: null,
+                currentHole: 1,
+                standings: [],
+                roundScores: [...otherRounds, ...finishedRounds],
+                currentRound: null,
+
             }
         default:
             return state;
