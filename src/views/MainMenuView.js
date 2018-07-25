@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { Button, } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation';
+import {connect} from 'react-redux'
 import AddPlayerView from './AddPlayerView'
 import AddCourseView from './AddCourseView'
 import SettingsView from './SettingsView'
@@ -16,8 +17,10 @@ class MainMenuView extends React.Component {
 
   static navigationOptions = {
     title: "DISC GOLF SCORECARD",
-
   }
+
+  
+
   render() {
 
     return (
@@ -112,3 +115,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#5998ff"
   }
 });
+

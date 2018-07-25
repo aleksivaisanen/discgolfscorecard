@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Text, Dimensions, Animated } from 'react-native';
+import { StyleSheet, View, FlatList, Alert, Dimensions, Animated, BackHandler } from 'react-native';
 import { connect } from 'react-redux'
 import { Button } from 'react-native-elements'
 import HoleScores from '../components/HoleScores'
-import { setCurrentHole } from '../actions/newRoundActions'
+import { setCurrentHole, discardPreviousRound } from '../actions/newRoundActions'
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -19,9 +19,36 @@ class NewRoundView extends React.Component {
         return params;
     };
 
-    componentDidMount() {
-        this.props.navigation.setParams({ title: "Hole " + this.props.currentHole + "- " + "Par " + this.props.chosenCourse.parArray[0] });
+    componentDidMount = () => {
+        this.props.navigation.setParams({ title: "Hole " + this.props.currentHole + " - Par " + this.props.chosenCourse.parArray[this.props.currentHole - 1], headerLeft: null});
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    componentWillUnmount = () =>{
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+  
+    discardRound = () => {
+        this.props.navigation.goBack(null)
+        this.props.discardPreviousRound()
+        
+    }
+    handleBackButton = () => {
+        Alert.alert(
+            "Warning!",
+            "Do you want to discard this round?",
+            [
+                {text:"Yes, I want to discard this round!", onPress: this.discardRound},
+                {text:"No, I DON'T want to discard this round!", onPress: () => {}}
+            ]
+        )
+        return true;
+    }
+
+
+    getItemLayout = (data, index) => (
+        { length: deviceWidth, offset: deviceWidth * index, index }
+      );
 
     onScrollEnd = (e) => {
         let contentOffset = e.nativeEvent.contentOffset;
@@ -29,7 +56,7 @@ class NewRoundView extends React.Component {
         let pageNum = Math.floor(contentOffset.x / viewSize.width);
         let holeNo = pageNum + 1
         this.props.setCurrentHole(holeNo)
-        this.props.navigation.setParams({ title: "Hole " + holeNo + " - " + "Par " + this.props.chosenCourse.parArray[holeNo - 1] });
+        this.props.navigation.setParams({ title: "Hole " + holeNo + " - Par " + this.props.chosenCourse.parArray[pageNum], headerLeft: null });
     }
 
 
@@ -48,9 +75,15 @@ class NewRoundView extends React.Component {
     render() {
         let position = Animated.divide(this.scrollX, deviceWidth);
 
+        //this prevents "pararray is undefined for null" when round is discarded with backbutton
+        //not ideal, but works :) 
+        if(this.props.chosenCourse){
         return (
             <View style={styles.container}>
                 <FlatList
+                    ref={ref => {this.list = ref}}
+                    getItemLayout={this.getItemLayout}
+                    initialScrollIndex={this.props.currentHole - 1}
                     horizontal
                     data={this.props.chosenCourse.parArray}
                     showsHorizontalScrollIndicator={false}
@@ -101,6 +134,9 @@ class NewRoundView extends React.Component {
                 </View>
             </View>
         )
+        //this prevents "pararray is undefined for null" when round is discarded with backbutton
+        //not ideal, but works :)
+    }else {return true}
     }
 }
 
@@ -142,7 +178,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        setCurrentHole: (currentHole) => dispatch(setCurrentHole(currentHole))
+        setCurrentHole: (currentHole) => dispatch(setCurrentHole(currentHole)),
+        discardPreviousRound: () => dispatch(discardPreviousRound()),
     })
 
 }

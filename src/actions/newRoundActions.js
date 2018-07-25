@@ -4,6 +4,7 @@ export const CHOOSE_SINGLE_PLAYER = 'CHOOSE_SINGLE_PLAYER'
 export const CHOOSE_COURSE = 'CHOOSE_COURSE'
 export const SET_CURRENT_HOLE = "SET_CURRENT_HOLE"
 export const FINISH_ROUND = "FINISH_ROUND"
+export const DISCARD_PREVIOUS_ROUND = "DISCARD_PREVIOUS_ROUND"
 
 export const startNewRound = () => {
     return {
@@ -37,6 +38,12 @@ export const setCurrentHole = (currentHole) => {
     return {
         type: SET_CURRENT_HOLE,
         currentHole
+    }
+}
+
+export const discardPreviousRound = () => {
+    return {
+        type: DISCARD_PREVIOUS_ROUND
     }
 }
 

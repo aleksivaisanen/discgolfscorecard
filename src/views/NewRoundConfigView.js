@@ -1,14 +1,33 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert, } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux'
-import { startNewRound } from '../actions/newRoundActions'
+import { startNewRound, discardPreviousRound } from '../actions/newRoundActions'
 
 class NewRoundConfigView extends React.Component {
 
   static navigationOptions = {
     title: "NEW ROUND"
   }
+
+  continuePreviousAlert = () => {
+    if(this.props.standings.length > 0){
+      Alert.alert(
+        'You have an unfinished round!',
+        'Do you want to continue previous round or start a new one and discard the old one?',
+        [
+          {text: 'Continue previous round', onPress: () => this.props.navigation.navigate('NewRound')},
+          {text: 'Discard previous round', onPress: this.props.discardPreviousRound}
+        ],
+        { cancelable: false }
+      )
+    }
+  }
+
+  componentDidMount = () => {
+    this.continuePreviousAlert
+  }
+
 
   startRound = () => {
     if(!this.props.chosenCourse && this.props.chosenPlayers.length < 1){
@@ -24,6 +43,7 @@ class NewRoundConfigView extends React.Component {
   }
 
   render() {
+
 
     let pickedCourse;
     if (this.props.chosenCourse) {
@@ -62,10 +82,7 @@ class NewRoundConfigView extends React.Component {
             buttonStyle={styles.menuButton}
             onPress={() => this.props.navigation.navigate('ChooseCourse')}
           />
-          <Button
-            title="Place bets and assign handicaps"
-            buttonStyle={styles.menuButton}
-          />
+
           <Button
             title="Start new round"
             buttonStyle={styles.menuButton}
@@ -102,12 +119,14 @@ const mapStateToProps = (state) => {
   return ({
     chosenPlayers: state.newRound.chosenPlayers,
     chosenCourse: state.newRound.chosenCourse,
+    standings: state.newRound.standings,
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    startNewRound: () => dispatch(startNewRound())
+    startNewRound: () => dispatch(startNewRound()),
+    discardPreviousRound: () => dispatch(discardPreviousRound()),
   })
 
 }

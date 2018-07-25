@@ -2,7 +2,6 @@
 
 To-do:
 * SQlite database for everything
-* Finish round view
 * Finish settings view
 * Finish statistics view
 * Implement redux for missing parts
@@ -12,6 +11,7 @@ Done:
 * 'Main menu' view
 * 'Add new player' view
 * 'Add new course' view
+* 'New round' view
 * Working redux for new course view
 * Working redux for new player view
 
